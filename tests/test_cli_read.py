@@ -23,3 +23,18 @@ def test_cli_mailboxes_for_first_account():
     assert result.exit_code == 0
     data = json.loads(result.output)
     assert isinstance(data, list)
+
+
+def test_cli_list_messages_with_limit():
+    import json
+    from macmailapp import MailApp
+    acct = MailApp().account(MailApp().accounts[0])
+    mbox = acct.mailboxes[0].name
+    result = CliRunner().invoke(
+        cli,
+        ["list", "--account", acct.name, "--mailbox", mbox, "--limit", "3", "--json"],
+    )
+    assert result.exit_code == 0
+    data = json.loads(result.output)
+    assert isinstance(data, list)
+    assert len(data) <= 3
