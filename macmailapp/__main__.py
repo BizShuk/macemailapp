@@ -1,12 +1,10 @@
 """macmailapp CLI entry point."""
 
-import click
+from .cli.cli import cli
 
 
-@click.group()
 def cli_main():
-    """macmailapp - CLI for Apple Mail.app"""
-    pass
+    cli()
 
 
 if __name__ == "__main__":
