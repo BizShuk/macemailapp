@@ -77,7 +77,7 @@ class MailApp:
 
 
 class Account:
-    """Stub — fleshed out in Task 5."""
+    """A Mail account (iCloud, Gmail, IMAP, etc.)."""
 
     def __init__(self, sb_account):
         self._account = sb_account
@@ -86,13 +86,34 @@ class Account:
     def name(self) -> str:
         return str(self._account.name())
 
+    @property
+    def id(self) -> str:
+        return str(self._account.id())
+
+    @cached_property
+    def mailboxes(self) -> list["Mailbox"]:
+        return [Mailbox(m, self.name) for m in self._account.mailboxes()]
+
+    def mailbox(self, name: str) -> "Mailbox":
+        for m in self.mailboxes:
+            if m.name == name:
+                return m
+        raise ValueError(f"Mailbox {name!r} not found in account {self.name!r}")
+
+    def __repr__(self) -> str:
+        return f"Account(name={self.name!r})"
+
 
 class Mailbox:
-    """Stub — implemented in Task 6."""
+    """A mailbox (INBOX, Drafts, Sent, etc.) within an Account."""
 
     def __init__(self, sb_mailbox, account_name: str):
         self._mailbox = sb_mailbox
         self._account_name = account_name
+
+    @property
+    def name(self) -> str:
+        return str(self._mailbox.name())
 
 
 class Message:
