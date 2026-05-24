@@ -76,6 +76,13 @@ class MailApp:
         result = run_script("createDraft", to, subject, body, from_account)
         return int(result)
 
+    def send_now(self, draft_id: int) -> int:
+        """Send a previously-saved draft by id. Destructive; caller must confirm."""
+        if not isinstance(draft_id, int) or draft_id <= 0:
+            raise ValueError("draft_id must be a positive integer")
+        result = run_script("sendDraft", draft_id)
+        return int(result)
+
     def __iter__(self) -> Generator["Account", None, None]:
         for a in self._app.accounts():
             yield Account(a)
