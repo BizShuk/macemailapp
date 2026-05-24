@@ -1,6 +1,20 @@
 from macmailapp import MailApp
 
 
+def test_make_draft_returns_message_id():
+    app = MailApp()
+    if not app.accounts:
+        return
+    draft_id = app.make_draft(
+        to="plan-test@example.invalid",
+        subject="macmailapp draft test (delete me)",
+        body="hello from macmailapp test",
+        from_account=app.accounts[0],
+    )
+    assert isinstance(draft_id, int)
+    assert draft_id > 0
+
+
 def test_message_mark_read_round_trip():
     app = MailApp()
     if not app.accounts:

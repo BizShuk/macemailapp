@@ -71,6 +71,11 @@ class MailApp:
     def quit(self) -> None:
         run_script("mailQuit")
 
+    def make_draft(self, to: str, subject: str, body: str, from_account: str) -> int:
+        """Save a new message as a draft (does not send). Returns the new message id."""
+        result = run_script("createDraft", to, subject, body, from_account)
+        return int(result)
+
     def __iter__(self) -> Generator["Account", None, None]:
         for a in self._app.accounts():
             yield Account(a)
