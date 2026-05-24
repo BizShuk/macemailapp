@@ -158,9 +158,65 @@ class Mailbox:
 
 
 class Message:
-    """Stub — implemented in Task 7."""
+    """A single email message inside a Mailbox."""
 
     def __init__(self, sb_message, account_name: str, mailbox_name: str):
         self._message = sb_message
         self._account_name = account_name
         self._mailbox_name = mailbox_name
+
+    @property
+    def id(self) -> int:
+        raw = self._message.id()
+        if raw == 0 or raw is None:
+            parsed = parse_id_from_object(self._message)
+            if parsed is None:
+                raise ScriptingBridgeError("could not resolve message id")
+            return parsed
+        return int(raw)
+
+    @property
+    def subject(self) -> str:
+        return str(self._message.subject() or "")
+
+    @property
+    def sender(self) -> str:
+        return str(self._message.sender() or "")
+
+    @property
+    def content(self) -> str:
+        return str(self._message.content() or "")
+
+    @property
+    def source(self) -> str:
+        return str(self._message.source() or "")
+
+    @property
+    def date_received(self) -> datetime:
+        return NSDate_to_datetime(self._message.dateReceived())
+
+    @property
+    def date_sent(self) -> datetime:
+        return NSDate_to_datetime(self._message.dateSent())
+
+    @property
+    def read(self) -> bool:
+        return bool(self._message.readStatus())
+
+    @property
+    def flagged(self) -> bool:
+        return bool(self._message.flaggedStatus())
+
+    @property
+    def account_name(self) -> str:
+        return self._account_name
+
+    @property
+    def mailbox_name(self) -> str:
+        return self._mailbox_name
+
+    def __repr__(self) -> str:
+        return (
+            f"Message(id={self.id}, subject={self.subject!r}, "
+            f"sender={self.sender!r}, mailbox={self._mailbox_name!r})"
+        )

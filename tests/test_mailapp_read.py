@@ -61,3 +61,42 @@ def test_mailbox_count_matches_len():
     acct = app.account(app.accounts[0])
     mbox = acct.mailboxes[0]
     assert mbox.count == len(mbox.messages())
+
+
+def test_message_has_subject_and_sender():
+    app = MailApp()
+    if not app.accounts:
+        return  # skip if no accounts
+    acct = app.account(app.accounts[0])
+    mbox = acct.mailboxes[0]
+    msgs = mbox.messages(limit=1)
+    if not msgs:
+        return  # empty mailbox
+    m = msgs[0]
+    assert isinstance(m.subject, str)
+    assert isinstance(m.sender, str)
+
+
+def test_message_id_is_int():
+    app = MailApp()
+    if not app.accounts:
+        return
+    acct = app.account(app.accounts[0])
+    mbox = acct.mailboxes[0]
+    msgs = mbox.messages(limit=1)
+    if not msgs:
+        return
+    assert isinstance(msgs[0].id, int)
+
+
+def test_message_dates_are_datetime():
+    from datetime import datetime as DT
+    app = MailApp()
+    if not app.accounts:
+        return
+    acct = app.account(app.accounts[0])
+    mbox = acct.mailboxes[0]
+    msgs = mbox.messages(limit=1)
+    if not msgs:
+        return
+    assert isinstance(msgs[0].date_received, DT)
