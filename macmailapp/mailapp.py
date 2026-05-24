@@ -105,7 +105,7 @@ class Account:
 
 
 class Mailbox:
-    """A mailbox (INBOX, Drafts, Sent, etc.) within an Account."""
+    """A mailbox (folder) inside a Mail account."""
 
     def __init__(self, sb_mailbox, account_name: str):
         self._mailbox = sb_mailbox
@@ -114,6 +114,47 @@ class Mailbox:
     @property
     def name(self) -> str:
         return str(self._mailbox.name())
+
+    @property
+    def account_name(self) -> str:
+        return self._account_name
+
+    @property
+    def count(self) -> int:
+        return int(self._mailbox.messages().count())
+
+    def messages(
+        self,
+        subject: Optional[str] = None,
+        sender: Optional[str] = None,
+        unread_only: bool = False,
+        flagged_only: bool = False,
+        limit: Optional[int] = None,
+    ) -> list["Message"]:
+        predicates = []
+        if subject:
+            predicates.append(("subject CONTAINS[cd] %@", subject))
+        if sender:
+            predicates.append(("sender CONTAINS[cd] %@", sender))
+        if unread_only:
+            predicates.append(("readStatus == NO", None))
+        if flagged_only:
+            predicates.append(("flaggedStatus == YES", None))
+
+        msgs = self._mailbox.messages()
+        if predicates:
+            fmt = " AND ".join(p[0] for p in predicates)
+            args = [p[1] for p in predicates if p[1] is not None]
+            predicate = AppKit.NSPredicate.predicateWithFormat_(fmt, *args)
+            msgs = msgs.filteredArrayUsingPredicate_(predicate)
+
+        result = [Message(m, self._account_name, self.name) for m in msgs]
+        if limit is not None:
+            result = result[:limit]
+        return result
+
+    def __repr__(self) -> str:
+        return f"Mailbox(name={self.name!r}, account={self._account_name!r})"
 
 
 class Message:

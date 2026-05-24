@@ -32,3 +32,32 @@ def test_mailapp_accounts_is_list_of_strings():
     assert isinstance(app.accounts, list)
     for a in app.accounts:
         assert isinstance(a, str)
+
+
+def test_mailbox_messages_returns_list_of_message():
+    app = MailApp()
+    if not app.accounts:
+        return  # skip if no accounts
+    acct = app.account(app.accounts[0])
+    mbox = acct.mailboxes[0]
+    msgs = mbox.messages()
+    assert isinstance(msgs, list)
+
+
+def test_mailbox_filter_by_subject():
+    app = MailApp()
+    if not app.accounts:
+        return
+    acct = app.account(app.accounts[0])
+    mbox = acct.mailboxes[0]
+    msgs = mbox.messages(subject="a")
+    assert isinstance(msgs, list)
+
+
+def test_mailbox_count_matches_len():
+    app = MailApp()
+    if not app.accounts:
+        return
+    acct = app.account(app.accounts[0])
+    mbox = acct.mailboxes[0]
+    assert mbox.count == len(mbox.messages())
