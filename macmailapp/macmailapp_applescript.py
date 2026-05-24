@@ -116,4 +116,48 @@ on accountFindBySender(accountName, mailboxName, queryText)
     end tell
     return theIDs
 end accountFindBySender
+
+on messageSetReadStatus(accountName, mailboxName, msgID, newStatus)
+    tell application "Mail"
+        tell account accountName
+            tell mailbox mailboxName
+                set m to (first message whose id is msgID)
+                set read status of m to newStatus
+            end tell
+        end tell
+    end tell
+end messageSetReadStatus
+
+on messageSetFlaggedStatus(accountName, mailboxName, msgID, newStatus)
+    tell application "Mail"
+        tell account accountName
+            tell mailbox mailboxName
+                set m to (first message whose id is msgID)
+                set flagged status of m to newStatus
+            end tell
+        end tell
+    end tell
+end messageSetFlaggedStatus
+
+on messageMoveTo(accountName, mailboxName, msgID, destAccountName, destMailboxName)
+    tell application "Mail"
+        tell account accountName
+            tell mailbox mailboxName
+                set m to (first message whose id is msgID)
+            end tell
+        end tell
+        move m to mailbox destMailboxName of account destAccountName
+    end tell
+end messageMoveTo
+
+on createDraft(toAddress, subjectText, bodyText, fromAccountName)
+    tell application "Mail"
+        set newMsg to make new outgoing message with properties {subject:subjectText, content:bodyText, sender:(get email addresses of account fromAccountName)'s item 1, visible:false}
+        tell newMsg
+            make new to recipient at end of to recipients with properties {address:toAddress}
+        end tell
+        save newMsg
+        return id of newMsg as integer
+    end tell
+end createDraft
 """
