@@ -1,4 +1,4 @@
-MAIL_APPLESCRIPT = r"""(********* AppleScript for macmailapp *********)
+(********* AppleScript for macmailapp *********)
 
 property WAIT_FOR_SCRIPT : 0.05
 
@@ -116,4 +116,3 @@ on accountFindBySender(accountName, mailboxName, queryText)
     end tell
     return theIDs
 end accountFindBySender
-"""
