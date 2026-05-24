@@ -215,6 +215,36 @@ class Message:
     def mailbox_name(self) -> str:
         return self._mailbox_name
 
+    def mark_read(self, value: bool = True) -> None:
+        run_script(
+            "messageSetReadStatus",
+            self._account_name,
+            self._mailbox_name,
+            self.id,
+            value,
+        )
+
+    def mark_flagged(self, value: bool = True) -> None:
+        run_script(
+            "messageSetFlaggedStatus",
+            self._account_name,
+            self._mailbox_name,
+            self.id,
+            value,
+        )
+
+    def move_to(self, dest_account: str, dest_mailbox: str) -> None:
+        run_script(
+            "messageMoveTo",
+            self._account_name,
+            self._mailbox_name,
+            self.id,
+            dest_account,
+            dest_mailbox,
+        )
+        self._account_name = dest_account
+        self._mailbox_name = dest_mailbox
+
     def __repr__(self) -> str:
         return (
             f"Message(id={self.id}, subject={self.subject!r}, "
