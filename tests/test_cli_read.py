@@ -13,3 +13,13 @@ def test_cli_accounts_json_flag_returns_valid_json():
     assert result.exit_code == 0
     data = json.loads(result.output)
     assert isinstance(data, list)
+
+
+def test_cli_mailboxes_for_first_account():
+    import json
+    from macmailapp import MailApp
+    acct = MailApp().accounts[0]
+    result = CliRunner().invoke(cli, ["mailboxes", "--account", acct, "--json"])
+    assert result.exit_code == 0
+    data = json.loads(result.output)
+    assert isinstance(data, list)

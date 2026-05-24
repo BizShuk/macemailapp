@@ -2,6 +2,7 @@ import click
 
 from macmailapp import __version__
 from .commands.accounts import accounts
+from .commands.mailboxes import mailboxes
 
 
 @click.group()
@@ -12,3 +13,4 @@ def cli():
 
 
 cli.add_command(accounts)
+cli.add_command(mailboxes)
