@@ -6,6 +6,7 @@ from .commands.mailboxes import mailboxes
 from .commands.list_messages import list_messages
 from .commands.show import show
 from .commands.move import move
+from .commands.mark import mark
 
 
 @click.group()
@@ -20,3 +21,4 @@ cli.add_command(mailboxes)
 cli.add_command(list_messages)
 cli.add_command(show)
 cli.add_command(move)
+cli.add_command(mark)
