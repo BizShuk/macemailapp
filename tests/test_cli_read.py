@@ -38,3 +38,18 @@ def test_cli_list_messages_with_limit():
     data = json.loads(result.output)
     assert isinstance(data, list)
     assert len(data) <= 3
+
+
+def test_cli_show_uses_first_message():
+    from macmailapp import MailApp
+    acct = MailApp().account(MailApp().accounts[0])
+    mbox = acct.mailboxes[0]
+    msgs = mbox.messages(limit=1)
+    if not msgs:
+        return
+    result = CliRunner().invoke(
+        cli,
+        ["show", "--account", acct.name, "--mailbox", mbox.name, "--id", str(msgs[0].id)],
+    )
+    assert result.exit_code == 0
+    assert msgs[0].subject in result.output or msgs[0].sender in result.output
