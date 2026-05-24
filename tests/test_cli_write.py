@@ -50,3 +50,32 @@ def test_cli_draft_creates_draft():
     ])
     assert result.exit_code == 0
     assert "draft saved" in result.output.lower()
+
+
+def test_cli_mark_read_round_trip():
+    app = MailApp()
+    if not app.accounts:
+        return
+    mbox = app.account(app.accounts[0]).mailboxes[0]
+    msgs = mbox.messages(limit=1)
+    if not msgs:
+        return
+    m = msgs[0]
+    original = m.read
+    runner = CliRunner()
+    r1 = runner.invoke(cli, [
+        "mark",
+        "--account", app.accounts[0],
+        "--mailbox", mbox.name,
+        "--id", str(m.id),
+        "--read" if not original else "--unread",
+    ])
+    assert r1.exit_code == 0
+    r2 = runner.invoke(cli, [
+        "mark",
+        "--account", app.accounts[0],
+        "--mailbox", mbox.name,
+        "--id", str(m.id),
+        "--read" if original else "--unread",
+    ])
+    assert r2.exit_code == 0
