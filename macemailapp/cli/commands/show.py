@@ -2,7 +2,7 @@ import click
 from rich.console import Console
 from rich.panel import Panel
 
-from macmailapp import MailApp
+from macemailapp import MailApp
 
 
 @click.command(name="show")

@@ -1,6 +1,6 @@
 import click
 
-from macmailapp import MailApp
+from macemailapp import MailApp
 
 
 @click.command(name="mark")

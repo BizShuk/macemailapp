@@ -1,4 +1,4 @@
-"""macmailapp CLI entry point."""
+"""macemailapp CLI entry point."""
 
 from .cli.cli import cli
 

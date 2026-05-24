@@ -1,6 +1,6 @@
 from applescript import AppleScript
 from .logging import logger
-from .macmailapp_applescript import MAIL_APPLESCRIPT
+from .macemailapp_applescript import MAIL_APPLESCRIPT
 
 SCRIPT_OBJ = AppleScript(MAIL_APPLESCRIPT)
 

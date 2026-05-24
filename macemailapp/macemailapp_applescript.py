@@ -1,4 +1,4 @@
-MAIL_APPLESCRIPT = r"""(********* AppleScript for macmailapp *********)
+MAIL_APPLESCRIPT = r"""(********* AppleScript for macemailapp *********)
 
 property WAIT_FOR_SCRIPT : 0.05
 

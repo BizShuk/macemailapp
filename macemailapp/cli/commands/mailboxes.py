@@ -4,7 +4,7 @@ import click
 from rich.console import Console
 from rich.table import Table
 
-from macmailapp import MailApp
+from macemailapp import MailApp
 
 
 @click.command(name="mailboxes")

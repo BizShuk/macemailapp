@@ -3,7 +3,7 @@ import json as _json
 import click
 from rich.console import Console
 
-from macmailapp import MailApp
+from macemailapp import MailApp
 
 
 @click.command(name="accounts")
