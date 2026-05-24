@@ -160,3 +160,15 @@ on createDraft(toAddress, subjectText, bodyText, fromAccountName)
         return id of newMsg as integer
     end tell
 end createDraft
+
+on sendDraft(msgID)
+    tell application "Mail"
+        set targets to (every outgoing message whose id is msgID)
+        if (count of targets) is 0 then
+            error "no draft with id " & msgID
+        end if
+        set theDraft to item 1 of targets
+        send theDraft
+        return msgID
+    end tell
+end sendDraft
