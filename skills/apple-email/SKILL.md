@@ -101,7 +101,7 @@ options:
 ```bash
 email --version
 # 若沒有 `email` 指令:
-#   uv tool install --python 3.13 macmailapp
+#   uv tool install --python 3.13 git+https://github.com/bizshuk/macemailapp.git
 # 在 macemailapp 原始碼目錄內開發時:
 #   uv run email ...
 ```
