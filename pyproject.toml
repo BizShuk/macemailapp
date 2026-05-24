@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "macmailapp"
+version = "0.1.0"
+description = "CLI tool and Python library for interacting with Apple Mail.app on macOS"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10, <3.14"
+dependencies = [
+    "py-applescript>=1.0.3,<2.0.0",
+    "click>=8.1.2,<9.0.0",
+    "rich>=12.4.4,<=14.0.0",
+    "markdown2>=2.4.3,<3.0.0",
+    "markdownify>=0.11.6,<1.0.0",
+    "pyobjc-framework-ScriptingBridge>=9.0.1",
+    "lxml>=5.2.1,<6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.1.2,<=8.0.0",
+    "pyinstaller>=6.6.0",
+    "bump2version>=1.0.1,<2.0.0",
+]
+
+[project.scripts]
+mail = "macmailapp.__main__:cli_main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["macmailapp"]
