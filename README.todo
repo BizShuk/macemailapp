@@ -15,17 +15,3 @@
 - [ ] 目錄／套件名 `macemailapp` 與產品／README 名 `macmailapp` 差一個字母，
       AppleScript 檔名也用了後者。決定唯一正名並收斂，或至少在
       `docs/terminology.md` 之外於 README 開頭明示，避免搜尋時漏找。
-
-## 測試 (Testing)
-
-- [ ] 22 個原始碼檔對應 8 個測試檔，涵蓋讀寫兩側。缺的是`跨帳號移動`
-      （`move.py`）的測試 — 這是唯一會跨越 Account 邊界的寫入操作，
-      也是最容易在 Mail.app 版本更迭時壞掉的路徑。
-- [ ] `send.py` 的安全防護目前沒有測試釘住。寄信是不可逆操作，
-      防護失效的代價高，值得補一個「防護被觸發時不得送出」的測試。
-
-## 相容性 (Compatibility)
-
-- [ ] 記錄目前驗證過的 macOS 與 Mail.app 版本組合到 `docs/memory/`。
-      ScriptingBridge 與 AppleScript 的行為會隨系統版本改變，
-      沒有基準版本就無法判斷回報的問題是退化還是環境差異。
