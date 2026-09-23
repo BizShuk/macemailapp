@@ -1,17 +1,10 @@
 # TODO
 
-> 本清單由 2026-08-10 的 submodule 一致性稽核建立。條目均有可查證的依據，
-> 但`優先序尚未排定` — 請依實際需求增刪。
+> 本清單由 2026-08-10 的 submodule 一致性稽核建立。條目均有可查證的依據。
 
-## 程式碼債 (Code Debt)
+## Architecture
 
-- [ ] `macmailapp.applescript` 與 `macemailapp_applescript.py` 是同一段
-      AppleScript 的兩份副本，靠人工同步。應改為建置期產生或執行期讀取，
-      否則兩份必然漂移，且漂移是靜默的。
-      （`macnotesapp` 有完全相同的問題並已在該處留下 TODO 註解，宜一併處理）
+- [ ] [P1] [refactor] `macmailapp.applescript` 與 `macemailapp_applescript.py` 是同一段 AppleScript 的兩份副本，靠人工同步。應改為建置期產生或執行期讀取，否則兩份必然漂移，且漂移是靜默的。（`macnotesapp` 有完全相同的問題並已在該處留下 TODO 註解，宜一併處理）
+- [ ] [P2] [chore] 目錄／套件名 `macemailapp` 與產品／README 名 `macmailapp` 差一個字母，AppleScript 檔名也用了後者。決定唯一正名並收斂，或至少在 `docs/terminology.md` 之外於 README 開頭明示，避免搜尋時漏找。
 
-## 命名 (Naming)
-
-- [ ] 目錄／套件名 `macemailapp` 與產品／README 名 `macmailapp` 差一個字母，
-      AppleScript 檔名也用了後者。決定唯一正名並收斂，或至少在
-      `docs/terminology.md` 之外於 README 開頭明示，避免搜尋時漏找。
+## Archive
